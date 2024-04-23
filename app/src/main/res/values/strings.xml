@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">validationcleanarch</string>
+    <string name="name_empty">Name cannot be empty</string>
+    <string name="name_space_only">Name cannot contain space only</string>
+    <string name="name_min_3">Name minimum 3 characters</string>
+    <string name="name_max_50">Name maximum 3 characters</string>
+</resources>
