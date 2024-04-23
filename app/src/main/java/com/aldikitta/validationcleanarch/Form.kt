@@ -7,12 +7,14 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.aldikitta.validationcleanarch.ui.theme.ValidationcleanarchTheme
@@ -22,10 +24,19 @@ fun Form(modifier: Modifier = Modifier) {
 
     val viewModel = viewModel<FormViewModel>()
     val state by viewModel.state.collectAsState()
+    val context = LocalContext.current
 
     val email = remember {
         mutableStateOf("")
     }
+
+    LaunchedEffect(key1 = Unit, block = {
+        val json = context.assets.open("form_errors.json")
+            .bufferedReader()
+            .use { it.readText() }
+
+        viewModel.jsonMock(json)
+    })
 
     Column(
         modifier = modifier.fillMaxSize(),
@@ -51,7 +62,7 @@ fun Form(modifier: Modifier = Modifier) {
             supportingText = {
                 Text(text = state.nameErrorMessage?.asString() ?: "")
             },
-            isError = state.isNameSuccessInput.not()
+            isError = (state.nameErrorMessage?.asString() ?: "").isNotBlank()
         )
 
         OutlinedTextField(
@@ -67,7 +78,9 @@ fun Form(modifier: Modifier = Modifier) {
             }
         )
 
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = {
+            viewModel.onEvent(FormEvent.Submit)
+        }, enabled = state.isEnableButtonSubmit) {
             Text(text = "Submit")
         }
     }

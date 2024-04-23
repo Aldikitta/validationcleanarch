@@ -1,0 +1,25 @@
+{
+  "code": 400,
+  "message": "permintaan tidak valid, kesalahan muncul ketika permintaan Anda memiliki parameter yang tidak valid.",
+  "data": null,
+  "errors": [
+    {
+      "field": "nik",
+      "message": "NIK yang diajukan sudah tersedia"
+    },
+    {
+      "field": "name",
+      "message": "Nama yang diinput tidak sesuai dengan KTP"
+    },
+    {
+      "field": "birth_place",
+      "message": "Tempat lahir tidak sesuai dengan KTP"
+    },
+    {
+      "field": "mother",
+      "message": "Nama Ibu tidak sesuai dengan KTP"
+    }
+  ],
+  "request_id": "aee043f8-c96f-4976-bc6e-fb82c09b3793",
+  "timestamp": "2023-03-08 02:27:58"
+}
